@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+     
+    <nav class="navbar">
+        <div class="content">
+          <div class="logo">
+            <a href="#">Masai Management App</a>
+          </div>
+          <ul class="menu-list">
+            <div class="icon cancel-btn">
+              <i class="fas fa-times"></i>
+            </div>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./employees.html">Employees</a></li>
+            <li><a href="./resgister.html">Register</a></li>
+            <li><a href="./login.html">Login</a></li>
+            
+          </ul>
+          <div class="icon menu-btn">
+            <i class="fas fa-bars"></i>
+          </div>
+        </div>
+      </nav>
+    
+      
+      <!--  -->
+      <div>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime excepturi sit ad incidunt ea debitis rerum molestias perferendis soluta at expedita repellendus deleniti, praesentium voluptates recusandae commodi est, blanditiis accusamus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos, ex fuga! Odio aliquid totam vel voluptatum voluptatem nostrum vero eaque? Veniam, quibusdam nulla sunt eos cupiditate asperiores, eum, quos labore quaerat vero ipsam distinctio ipsa sed impedit suscipit! Quam non hic iure vitae quaerat, asperiores omnis mollitia maiores corporis eum optio facere esse aliquam excepturi, similique animi officia magnam deleniti sed praesentium. Reiciendis tempore numquam eius eveniet ullam blanditiis molestiae asperiores corporis sapiente, possimus harum pariatur at voluptas similique ut.</div>
+
+
+      <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Gender</th>
+                <th>Salary</th>
+            </tr>
+
+            <tbody id="data">
+
+               
+            </tbody>
+        </thead>
+      </table>
+      <script>
+        const body = document.querySelector("body");
+        const navbar = document.querySelector(".navbar");
+        const menuBtn = document.querySelector(".menu-btn");
+        const cancelBtn = document.querySelector(".cancel-btn");
+        menuBtn.onclick = ()=>{
+          navbar.classList.add("show");
+          menuBtn.classList.add("hide");
+          body.classList.add("disabled");
+        }
+        cancelBtn.onclick = ()=>{
+          body.classList.remove("disabled");
+          navbar.classList.remove("show");
+          menuBtn.classList.remove("hide");
+        }
+        window.onscroll = ()=>{
+          this.scrollY > 20 ? navbar.classList.add("sticky") : navbar.classList.remove("sticky");
+        }
+
+
+        // 
+
+        fetch('https://dbioz2ek0e.execute-api.ap-south-1.amazonaws.com/mockapi/get-employees').then((data)=>{
+         return data.json()
+        }).then((completedata)=>{
+            let data =""
+            console.log(completedata)
+
+            completedata.data.map((value)=>{
+
+                data+=`
+                
+
+                <tr>
+                    <td> ${value.id} </td>
+                   <td><img src=${value.image}/>   </td>
+                    <td>${value.name}</td>
+                    <td>${value.department}</td>
+                    <td>${value.gender}</td>
+                    <td>${value.salary}</td>
+                
+
+                    
+                </tr>
+
+                
+                `
+
+            })
+        
+
+            document.getElementById('data').innerHTML= data
+        }).catch((err)=>{
+            console.log(err)
+        })
+
+
+
+
+
+
+      </script>
+    
+</body>
+</html>
